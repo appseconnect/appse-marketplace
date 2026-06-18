@@ -95,3 +95,70 @@ After plugins are present (and Cursor reloaded if needed), read and follow the r
 | `appse-devops` | `%USERPROFILE%\.cursor\plugins\local\appse-devops\skills\ops-init\SKILL.md` |
 
 For role inits: execute from **Step 1 / Phase 1** onward — **do not repeat** plugin install (Step 0 / Phase 2 plugin branch).
+
+---
+
+## Update existing install
+
+Use when plugins are **already cloned** and you want the latest skills from GitHub.
+
+### When to update
+
+- After a platform release or skill fix is pushed to GitHub
+- When a skill fails with outdated paths or missing steps
+- After `appse-marketplace` manifest adds or changes a plugin entry
+
+### Option A — re-run setup skill (recommended)
+
+Run your role setup skill in Agent chat. It pulls marketplace, core, and role plugin (Phases 1–3), then reloads skills after **Developer: Reload Window** if anything changed.
+
+| Role | Command |
+|------|---------|
+| Product Manager | `/setup-pm` |
+| Product Designer | `/setup-ds` |
+| Product Engineer | `/setup-eng` |
+| Quality Engineer | `/setup-qa` |
+| DevOps Engineer | `/setup-ops` |
+
+Workspace repos (`arise-specs`, `arise`, …) are **not** updated by setup — only plugin clones under `plugins/local`.
+
+### Option B — manual git pull
+
+Confirm each repo has a **clean working tree** (`git status`) before pulling. Never pull on dirty.
+
+**Product Manager example** (replace role plugin folder for your role):
+
+```powershell
+$root = "$env:USERPROFILE\.cursor\plugins\local"
+
+git -C "$root\appse-marketplace" pull origin main
+git -C "$root\appse-core" pull origin main
+git -C "$root\appse-product" pull origin main
+```
+
+| Role | Third repo to pull |
+|------|-------------------|
+| Product Manager | `appse-product` |
+| Product Designer | `appse-design` |
+| Product Engineer | `appse-engineering` |
+| Quality Engineer | `appse-quality` |
+| DevOps Engineer | `appse-devops` |
+
+Then **Developer: Reload Window** in Cursor.
+
+### Option C — role init Step 0
+
+If plugins are installed, run **`/pm-init`**, **`/eng-init`**, etc. Step 0 pulls marketplace → resolves manifest → pulls core + role plugin when you confirm.
+
+### After update
+
+1. Restart Cursor (`Developer: Reload Window`)
+2. Confirm skills appear in the picker (`/fumadocs-formatting`, role skills)
+3. Re-run `{role}-init` only if workspace or handbook layout changed — not required for skill-only plugin updates
+
+### Guardrails
+
+- Never pull with uncommitted changes in a plugin clone
+- Pull **marketplace first** — manifest may point at new plugin repos
+- If a new plugin appears in the manifest but folder is missing, re-run **`/setup-{role}`** to clone it
+

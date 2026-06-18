@@ -252,6 +252,39 @@ Setup skills read `.cursor-plugin/marketplace.json` in this repo and git-clone e
 
 Full runbook: `handbook/playbooks/install-plugin.md` in `arise-specs`. Install rules: `skills/references/marketplace-plugin-install.md` or `appse-core/conventions/plugin-install.md`.
 
+## Update (Cursor)
+
+When plugin skills or this catalog change on GitHub:
+
+**Recommended:** re-run your role setup skill (`/setup-pm`, `/setup-eng`, …) — pulls marketplace, core, and role plugin.
+
+**Manual pull** (clean working tree on each repo):
+
+```powershell
+$root = "$env:USERPROFILE\.cursor\plugins\local"
+git -C "$root\appse-marketplace" pull origin main
+git -C "$root\appse-core" pull origin main
+git -C "$root\appse-product" pull origin main   # swap for your role plugin
+```
+
+| Role | Role plugin to pull |
+|------|---------------------|
+| Product Manager | `appse-product` |
+| Product Designer | `appse-design` |
+| Product Engineer | `appse-engineering` |
+| Quality Engineer | `appse-quality` |
+| DevOps Engineer | `appse-devops` |
+
+Then **Developer: Reload Window**. See **Update existing install** in `skills/references/marketplace-plugin-install.md`.
+
+## Update (Claude Code)
+
+```text
+/plugin marketplace update appse
+/plugin install appse-core@appse
+/plugin install appse-{role}@appse
+```
+
 ## Path conventions
 
 ```
