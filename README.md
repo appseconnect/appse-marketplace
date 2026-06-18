@@ -4,13 +4,15 @@ Plugin catalog for **appse ai** — the single entry point for installing all ro
 
 ## What this repo is
 
-This repo does not contain skills. It publishes a **marketplace manifest** that points to the individual plugin repos under [appseconnect](https://github.com/appseconnect/).
+This repo publishes the **marketplace manifest** (`.cursor-plugin/marketplace.json`) and **role setup skills** (`setup-pm`, `setup-eng`, …) that install plugins from the catalog and chain into each role's `*-init` skill. Individual skill libraries live in the plugin repos under [appseconnect](https://github.com/appseconnect/).
 
 
 | File                              | Platform    |
 | --------------------------------- | ----------- |
 | `.claude-plugin/marketplace.json` | Claude Code |
-| `.cursor-plugin/marketplace.json` | Cursor      |
+| `.cursor-plugin/marketplace.json` | Cursor catalog |
+| `.cursor-plugin/plugin.json`      | Cursor bootstrap plugin |
+| `skills/setup-{role}/SKILL.md`    | Cursor role setup (PM, Eng, QA, …) |
 
 
 Both manifests list the same plugins and stay in sync.
@@ -28,7 +30,15 @@ Both manifests list the same plugins and stay in sync.
 | `appse-design`      | [appse-design](https://github.com/appseconnect/appse-design)           | Product Design — reserved                                |
 
 
-Every role plugin requires `appse-core`. Each `*-init` skill auto-installs it if missing.
+Every role plugin requires `appse-core`. The marketplace ships **`setup-{role}`** skills that clone the catalog, install core + role plugin from the manifest, then chain into **`*-init`** workspace bootstrap.
+
+| Role | Setup skill (marketplace) | Role init (role plugin) |
+|------|---------------------------|-------------------------|
+| Product Manager | `/setup-pm` | `/pm-init` |
+| Product Designer | `/setup-ds` | `/ds-init` |
+| Product Engineer | `/setup-eng` | `/eng-init` |
+| Quality Engineer | `/setup-qa` | `/qa-init` |
+| DevOps Engineer | `/setup-ops` | `/ops-init` |
 
 ## Skill availability
 
@@ -53,7 +63,7 @@ Every role plugin requires `appse-core`. Each `*-init` skill auto-installs it if
 Install `appse-product`, then run skills in order. Each step gates the next.
 
 ```text
-/pm-init                  bootstrap env (auto-installs appse-core)
+/pm-init                  bootstrap env (use /setup-pm first on fresh Cursor install)
    │
 /pm-triage                Zoho Desk + AzDO → ranked problem list
    │ pick a problem
@@ -221,13 +231,33 @@ Replace `appse-engineering` with the role plugin you need (`appse-product`, `app
 
 ## Install (Cursor)
 
-Add this marketplace repo as a plugin source, then install individual plugins from the catalog. Each plugin repo ships its own `.cursor-plugin/plugin.json` and `skills/` folder.
+**Marketplace-first** — clone the catalog, run a setup skill for your role, then workspace init.
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.cursor\plugins\local"
+git clone https://github.com/appseconnect/appse-marketplace.git "$env:USERPROFILE\.cursor\plugins\local\appse-marketplace"
+```
+
+Restart Cursor (`Developer: Reload Window`), then run your role setup skill:
+
+| Role | Setup skill | Installs from manifest | Then runs |
+|------|-------------|------------------------|-----------|
+| Product Manager | `/setup-pm` | `appse-core` + `appse-product` | `pm-init` |
+| Product Designer | `/setup-ds` | `appse-core` + `appse-design` | `ds-init` |
+| Product Engineer | `/setup-eng` | `appse-core` + `appse-engineering` | `eng-init` |
+| Quality Engineer | `/setup-qa` | `appse-core` + `appse-quality` | `qa-init` |
+| DevOps Engineer | `/setup-ops` | `appse-core` + `appse-devops` | `ops-init` |
+
+Setup skills read `.cursor-plugin/marketplace.json` in this repo and git-clone each plugin — **no symlinks**. After a fresh plugin clone, reload Cursor and re-run setup or `*-init`.
+
+Full runbook: `handbook/playbooks/install-plugin.md` in `arise-specs`. Install rules: `skills/references/marketplace-plugin-install.md` or `appse-core/conventions/plugin-install.md`.
 
 ## Path conventions
 
 ```
-appse-marketplace/.claude-plugin/marketplace.json   ← catalog
-<plugin>/.claude-plugin/plugin.json                 ← per-plugin manifest
+appse-marketplace/.cursor-plugin/marketplace.json   ← catalog (plugin URLs)
+appse-marketplace/skills/setup-{role}/SKILL.md      ← role bootstrap entry
+<plugin>/.cursor-plugin/plugin.json                 ← per-plugin manifest
 <plugin>/skills/<skill-name>/SKILL.md               ← skill definitions
 appse-core/skills/fumadocs-formatting/              ← handbook formatting (shared)
 ```
