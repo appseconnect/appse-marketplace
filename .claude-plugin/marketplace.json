@@ -4,32 +4,35 @@
   "plugins": [
     {
       "name": "appse-core",
-      "source": { "source": "github", "repo": "appse/appse-core" },
+      "source": { "source": "github", "repo": "appseconnect/appse-core" },
       "description": "Shared base — conventions, paths, gates, AzDO config"
     },
     {
       "name": "appse-product",
-      "source": { "source": "github", "repo": "appse/appse-product" },
+      "source": { "source": "github", "repo": "appseconnect/appse-product" },
       "description": "PM skills — discovery, PRD, FRD, roadmap, stories"
     },
     {
       "name": "appse-engineering",
-      "source": { "source": "github", "repo": "appse/appse-engineering" },
+      "source": {
+        "source": "github",
+        "repo": "appseconnect/appse-engineering"
+      },
       "description": "Architecture + engineering skills"
     },
     {
       "name": "appse-quality",
-      "source": { "source": "github", "repo": "appse/appse-quality" },
+      "source": { "source": "github", "repo": "appseconnect/appse-quality" },
       "description": "QA skills — test, deploy, E2E, review"
     },
     {
       "name": "appse-devops",
-      "source": { "source": "github", "repo": "appse/appse-devops" },
+      "source": { "source": "github", "repo": "appseconnect/appse-devops" },
       "description": "DevOps skills — deploy spec, build/publish, K8s"
     },
     {
       "name": "appse-design",
-      "source": { "source": "github", "repo": "appse/appse-design" },
+      "source": { "source": "github", "repo": "appseconnect/appse-design" },
       "description": "Product Design — reserved"
     }
   ]
