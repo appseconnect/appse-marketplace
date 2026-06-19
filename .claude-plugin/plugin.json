@@ -2,12 +2,11 @@
   "name": "appse-marketplace",
   "displayName": "appse ai Marketplace",
   "version": "1.0.0",
-  "description": "Plugin catalog and role setup skills for appse ai. Clone this repo first into Cursor plugins/local, then run setup-{role}.",
+  "description": "Plugin catalog and role setup skills for appse ai. Install from the appse marketplace, then run setup-{role} to bootstrap core + role plugins.",
   "author": {
     "name": "appse ai",
     "email": "eng@appse.ai"
   },
   "repository": "https://github.com/appseconnect/appse-marketplace",
-  "keywords": ["appse", "marketplace", "setup", "bootstrap"],
-  "skills": "./skills/"
+  "keywords": ["appse", "marketplace", "setup", "bootstrap"]
 }

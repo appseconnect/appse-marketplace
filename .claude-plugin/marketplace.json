@@ -1,7 +1,20 @@
 {
   "name": "appse",
+  "description": "appse ai plugin catalog — core, role plugins, and setup skills",
   "owner": { "name": "appse ai", "email": "eng@appse.ai" },
   "plugins": [
+    {
+      "name": "appse-marketplace",
+      "source": "./",
+      "description": "Role setup skills — bootstrap appse-core + role plugin from catalog",
+      "skills": [
+        "./skills/setup-pm",
+        "./skills/setup-ds",
+        "./skills/setup-eng",
+        "./skills/setup-qa",
+        "./skills/setup-ops"
+      ]
+    },
     {
       "name": "appse-core",
       "source": { "source": "github", "repo": "appseconnect/appse-core" },
