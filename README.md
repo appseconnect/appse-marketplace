@@ -11,8 +11,10 @@ This repo publishes the **marketplace manifest** (`.cursor-plugin/marketplace.js
 | --------------------------------- | ----------- |
 | `.claude-plugin/marketplace.json` | Claude Code |
 | `.cursor-plugin/marketplace.json` | Cursor catalog |
+| `.claude-plugin/marketplace.json` | Claude Code / Claude with VS Code |
 | `.cursor-plugin/plugin.json`      | Cursor bootstrap plugin |
-| `skills/setup-{role}/SKILL.md`    | Cursor role setup (PM, Eng, QA, …) |
+| `skills/setup-{role}/SKILL.md`    | Role bootstrap — asks AI tool, installs plugins, chains to *-init |
+| `skills/references/ai-tool-plugin-install.md` | Shared install branching (Cursor / Claude Code / Claude with VS Code) |
 
 
 Both manifests list the same plugins and stay in sync.
@@ -30,7 +32,7 @@ Both manifests list the same plugins and stay in sync.
 | `appse-design`      | [appse-design](https://github.com/appseconnect/appse-design)           | Product Design — reserved                                |
 
 
-Every role plugin requires `appse-core`. The marketplace ships **`setup-{role}`** skills that clone the catalog, install core + role plugin from the manifest, then chain into **`*-init`** workspace bootstrap.
+Every role plugin requires `appse-core`. The marketplace ships **`setup-{role}`** skills that ask your AI tool, install core + role plugin per tool, then chain into **`*-init`** workspace bootstrap.
 
 | Role | Setup skill (marketplace) | Role init (role plugin) |
 |------|---------------------------|-------------------------|
@@ -220,10 +222,13 @@ Window 2   eng-review-code ∥ ops-spec prep (prod deploy spec — after Gate 4 
 Window 3   qa-deploy→qa-e2e→qa-review ∥ ops-k8s prep     (both after image built)
 ```
 
-## Install (Claude Code)
+## Install (Claude Code / Claude with VS Code)
+
+Run **`/setup-{role}`** and choose your AI tool, or install manually:
 
 ```text
 /plugin marketplace add appseconnect/appse-marketplace
+/plugin install appse-core@appse
 /plugin install appse-engineering@appse
 ```
 
@@ -238,7 +243,7 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.cursor\plugins\loca
 git clone https://github.com/appseconnect/appse-marketplace.git "$env:USERPROFILE\.cursor\plugins\local\appse-marketplace"
 ```
 
-Restart Cursor (`Developer: Reload Window`), then run your role setup skill:
+Restart Cursor (`Developer: Reload Window`), then run your role setup skill and choose **Cursor**:
 
 | Role | Setup skill | Installs from manifest | Then runs |
 |------|-------------|------------------------|-----------|
@@ -250,7 +255,7 @@ Restart Cursor (`Developer: Reload Window`), then run your role setup skill:
 
 Setup skills read `.cursor-plugin/marketplace.json` in this repo and git-clone each plugin — **no symlinks**. After a fresh plugin clone, reload Cursor and re-run setup or `*-init`.
 
-Full runbook: `handbook/playbooks/install-plugin.md` in `arise-specs`. Install rules: `skills/references/marketplace-plugin-install.md` or `appse-core/conventions/plugin-install.md`.
+Full runbook: `handbook/playbooks/install-plugin.md` in `arise-specs`. Install rules: `skills/references/ai-tool-plugin-install.md` or `appse-core/conventions/plugin-install.md`.
 
 ## Update (Cursor)
 

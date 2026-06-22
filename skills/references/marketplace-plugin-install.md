@@ -1,6 +1,8 @@
 # Marketplace-First Plugin Install (Cursor)
 
-Shared by `setup-{role}` skills and role `*-init` Step 0. **No symlinks** — git clone or pull only.
+**Cursor branch only.** For IDE selection and Claude Code / Claude with VS Code paths, read `ai-tool-plugin-install.md` first.
+
+Shared by `setup-{role}` skills and role `*-init` Step 0 when **AI tool = Cursor**. **No symlinks** — git clone or pull only.
 
 ## Constants
 
