@@ -30,9 +30,12 @@ Both manifests list the same plugins and stay in sync.
 | `appse-quality`     | [appse-quality](https://github.com/appseconnect/appse-quality)         | QA skills — test, deploy, E2E, review                    |
 | `appse-devops`      | [appse-devops](https://github.com/appseconnect/appse-devops)           | DevOps skills — deploy spec, build/publish, K8s          |
 | `appse-design`      | [appse-design](https://github.com/appseconnect/appse-design)           | Product Design — reserved                                |
+| `appse-appdev`      | [appse-appdev](https://github.com/appseconnect/appse-appdev)           | App development — create apps (connectors): actions, triggers, tools |
 
 
-Every role plugin requires `appse-core`. The marketplace ships **`setup-{role}`** skills that ask your AI tool, install core + role plugin per tool, then chain into **`*-init`** workspace bootstrap.
+Every role plugin requires `appse-core` — except **`appse-appdev`**, which is standalone
+(direct install, no core; app development against a local Docker appse ai stack). The
+marketplace ships **`setup-{role}`** skills that ask your AI tool, install core + role plugin per tool, then chain into **`*-init`** workspace bootstrap.
 
 | Role | Setup skill (marketplace) | Role init (role plugin) |
 |------|---------------------------|-------------------------|
@@ -41,6 +44,7 @@ Every role plugin requires `appse-core`. The marketplace ships **`setup-{role}`*
 | Product Engineer | `/setup-eng` | `/eng-init` |
 | Quality Engineer | `/setup-qa` | `/qa-init` |
 | DevOps Engineer | `/setup-ops` | `/ops-init` |
+| App Developer | `/setup-appdev` | `/app-init` |
 
 ## Skill availability
 
@@ -52,6 +56,7 @@ Every role plugin requires `appse-core`. The marketplace ships **`setup-{role}`*
 | `appse-devops`      | **5**          | `ops-docker` = post–Gate 4 compose; not daily dev   |
 | `appse-quality`     | **7**          | Includes `qa-deploy`                                |
 | `appse-design`      | **1**          | `ds-init` only                                      |
+| `appse-appdev`      | **5**          | `app-init` + `app-create`/`app-action`/`app-trigger`/`app-tools` |
 
 
 **P1 handoff chain:** `pm-workitem-sync` → Engineering → `ops-build` → `qa-deploy` → QA.
@@ -99,6 +104,21 @@ Install `appse-design`, then pair with PM during discovery. Working skills are r
    pairs on /pm-user-research   research plan + synthesis
    │
    (ds-* working skills reserved — flows, wireframes, design-system, handoff)
+```
+
+### App Developer
+
+Install `appse-appdev` (standalone — no `appse-core`). Builds appse ai platform apps
+(connectors) and their operations against a local Docker appse ai stack.
+
+```text
+/app-init                 setup repos + Docker + local appse ai (docker compose)
+   │
+/app-create               scaffold a new app (connector): code, auth, category
+   │
+/app-action               author action operations (request/response)
+/app-trigger              author trigger operations (polling / webhook)
+/app-tools                expose operations as agent-callable AI tools
 ```
 
 ### Product Engineer
@@ -252,6 +272,7 @@ Restart Cursor (`Developer: Reload Window`), then run your role setup skill and 
 | Product Engineer | `/setup-eng` | `appse-core` + `appse-engineering` | `eng-init` |
 | Quality Engineer | `/setup-qa` | `appse-core` + `appse-quality` | `qa-init` |
 | DevOps Engineer | `/setup-ops` | `appse-core` + `appse-devops` | `ops-init` |
+| App Developer | `/setup-appdev` | `appse-appdev` (standalone) | `app-init` |
 
 Setup skills read `.cursor-plugin/marketplace.json` in this repo and git-clone each plugin — **no symlinks**. After a fresh plugin clone, reload Cursor and re-run setup or `*-init`.
 
@@ -279,6 +300,7 @@ git -C "$root\appse-product" pull origin main   # swap for your role plugin
 | Product Engineer | `appse-engineering` |
 | Quality Engineer | `appse-quality` |
 | DevOps Engineer | `appse-devops` |
+| App Developer | `appse-appdev` |
 
 Then **Developer: Reload Window**. See **Update existing install** in `skills/references/marketplace-plugin-install.md`.
 
@@ -326,6 +348,7 @@ workspace files are not shared across roles.
 | Engineering | `eng-init` | `eng-workspace.code-workspace` | `arise-specs`, `arise`     |
 | DevOps      | `ops-init` | `ops-workspace.code-workspace` | `arise-specs`, `arise`     |
 | Quality     | `qa-init`  | `qa-workspace.code-workspace`  | `arise-specs`, `arise-e2e` |
+| App Dev     | `app-init` | `appdev-workspace.code-workspace` | `appse-ai-community-apps`, `appse-ai-docs` |
 
 
 Canonical rules: `appse-core/conventions/workspace.md`.

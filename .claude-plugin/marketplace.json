@@ -12,7 +12,8 @@
         "./skills/setup-ds",
         "./skills/setup-eng",
         "./skills/setup-qa",
-        "./skills/setup-ops"
+        "./skills/setup-ops",
+        "./skills/setup-appdev"
       ]
     },
     {
@@ -47,6 +48,11 @@
       "name": "appse-design",
       "source": { "source": "github", "repo": "appseconnect/appse-design" },
       "description": "Product Design — reserved"
+    },
+    {
+      "name": "appse-appdev",
+      "source": { "source": "github", "repo": "appseconnect/appse-appdev" },
+      "description": "App development — create platform apps (connectors): actions, triggers, tools"
     }
   ]
 }
