@@ -20,15 +20,36 @@ Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marke
 ## Workflow
 
 1. Read `skills/references/ai-tool-plugin-install.md`.
-2. **Phase 0** — Ask AI tool: **Cursor** / **Claude Code** / **Claude with VS Code**.
+2. Ask which tool they are using. Never guess:
+
+   > "Which app are you working in? The install steps are different for each one.
+   >
+   > - **Cursor**
+   > - **Claude Code** (the command line)
+   > - **Claude with VS Code**"
+
 3. **Install plugins** for **`appse-product`**:
    - **Cursor** → `marketplace-plugin-install.md` Phases 1–4
    - **Claude Code** or **Claude with VS Code** → `/plugin marketplace add` + install commands in `ai-tool-plugin-install.md`
-4. If Cursor fresh clone required reload → stop; re-run **`/setup-pm`** or **`/pm-init`** after **Developer: Reload Window**.
-5. **Phase 5** → follow `pm-init` from **Step 1** onward (skip Step 0 plugin install). Pass AI tool choice for workspace-open steps.
+4. On Cursor, a first-time install needs a restart before the new skills appear. Stop and say so:
 
-## Definition of Done
+   > "The Product Manager tools are downloaded, but Cursor has to restart before it
+   > can see them. Open the command palette and run **Developer: Reload Window**.
+   > When it comes back, run `/setup-pm` again and I will pick up where we left off."
 
-- [ ] AI tool confirmed via explicit question.
-- [ ] `appse-core` + `appse-product` installed per chosen AI tool.
-- [ ] `pm-init` workspace bootstrap completed (or reload pending with clear next step).
+5. Then follow `pm-init` from **Step 1** onward. Skip its Step 0 — the plugins are
+   already installed. Pass the tool choice along so it opens the workspace correctly.
+
+## What "done" looks like
+
+- [ ] You told me which app you are using — I never assume it.
+- [ ] The two Product Manager tool sets, `appse-core` and `appse-product`, are installed.
+- [ ] Your workspace is set up by `pm-init` — or you have been told clearly that a
+      restart is needed and what to run next.
+
+## Output Rules
+
+- Everything the user reads is plain English — `conventions/plain-english.md` (appse-core)
+- This is often someone's first contact with appse ai. Assume no prior knowledge
+- Say what each step is doing and roughly how long it takes
+- When something fails, say what to try next — never leave them at an error message
