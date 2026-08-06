@@ -201,17 +201,24 @@ PM ──[pm-workitem-sync]──► ENGINEER ──[eng-pr merged]──► OPS
 OPS(prod) ◄──[Gate 4 ✅]── QA ◄──[qa-deploy]── OPS(ops-build)
 ```
 
-### The Two Contracts That Cross Teams
+### The Contracts That Cross Teams
 
 ```text
 Feature → Image map     ops-build writes · qa-deploy reads · ops-k8s reads
                         (handbook/engineering/deployments/image-map.json — digest required)
-Feature branch map      eng-dev writes · eng-pr / ops-build read
-                        (handbook/engineering/feature-branch-mapping.json)
 Env registry            eng-dev declares · ops-spec reconciles · all deploys read
 Requirement ID registry pm-prd (P/SP) · pm-frd (F) · pm-stories-azdo (U/J)
                         ({BASE}/requirement-id-registry.json)
+Branch context          NOT a file — every skill derives feature id, user slug and
+                        PR target from `git branch --show-current`
+                        (appse-core/conventions/branches.md → resolve-branch-context)
 ```
+
+**Skills are independent.** No skill requires a file another skill produced in order
+to resolve branch context, so each plugin works standalone in any repo or workspace.
+`handbook/engineering/feature-branch-mapping.json` still exists as an *optional*
+record for the AzDO work item id and PR history — read to enrich, never to decide,
+and git wins any disagreement.
 
 ### Docker (three skills, three moments)
 
@@ -358,13 +365,18 @@ Canonical rules: `appse-core/conventions/workspace.md`.
 Branch namespace prefix: `**appseai`** (not the repo name `arise`).
 
 
-| Branch              | Pattern                        |
-| ------------------- | ------------------------------ |
-| Feature integration | `appseai/feature/{feature-id}` |
-| Developer           | `appseai/{user}/{feature-id}`  |
+| Tier | Branch              | Pattern                             |
+| ---- | ------------------- | ----------------------------------- |
+| T1   | Feature integration | `appseai/feature/{feature-id}`      |
+| T3   | Sub-feature         | `appseai/feature/{parent}/{sub}`    |
+| T2   | Developer           | `appseai/{user}/{feature-id}`       |
 
+`feature` is a reserved second segment — a user slug is never `feature`. That is what
+makes any branch name parse unambiguously back into its tier.
 
-PR at `eng-pr`: user branch → feature branch. Mapping: `handbook/engineering/feature-branch-mapping.json`.
+PR at `eng-pr` is always **exactly one tier up**, derived from the branch name, never
+read from a file: user → feature → parent feature. `feature → main` is manual and
+post-Gate-4, out of scope for `eng-pr`.
 AzDO Epic/Feature/Story titles: `[{feature-id}]` prefix — see `pm-stories-azdo`.
 Full rules: `appse-core/conventions/branches.md` · `appse-core/conventions/naming.md`.
 
