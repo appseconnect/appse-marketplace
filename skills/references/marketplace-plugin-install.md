@@ -1,4 +1,7 @@
-# Marketplace-First Plugin Install (Cursor)
+# Installing the appse ai tools in Cursor
+
+This is the Cursor route. If you are using Claude Code or Claude with VS Code, read
+`ai-tool-plugin-install.md` instead — the steps are different.
 
 **Cursor branch only.** For IDE selection and Claude Code / Claude with VS Code paths, read `ai-tool-plugin-install.md` first.
 
@@ -27,7 +30,9 @@ Every role needs **`appse-core`** plus one role plugin:
 
 ---
 
-## Phase 1 — Clone or update marketplace catalog
+## Step 1 — Get the catalogue
+
+The catalogue is a small repo listing every appse ai plugin and where it lives.
 
 Target: `%USERPROFILE%\.cursor\plugins\local\appse-marketplace`
 
@@ -41,7 +46,7 @@ Verify manifest exists: `.cursor-plugin/marketplace.json`.
 
 ---
 
-## Phase 2 — Resolve plugin repos from manifest
+## Step 2 — Work out which repos to download
 
 1. Read `%USERPROFILE%\.cursor\plugins\local\appse-marketplace\.cursor-plugin\marketplace.json`.
 2. For each required plugin name (`appse-core` + role plugin), find the matching entry in `plugins[]`.
@@ -59,7 +64,7 @@ If a plugin name is missing from the manifest → hard stop; marketplace catalog
 
 ---
 
-## Phase 3 — Clone or update each plugin
+## Step 3 — Download them
 
 Apply to **each** resolved plugin (`appse-core` + role plugin):
 
@@ -78,13 +83,16 @@ Apply to **each** resolved plugin (`appse-core` + role plugin):
 
 ---
 
-## Phase 4 — Reload Cursor
+## Step 4 — Restart Cursor
+
+Cursor only notices new skills when it restarts. Skipping this is the single most
+common reason someone thinks the install failed.
 
 If **any** plugin was freshly cloned in this run → tell the user to run **Developer: Reload Window**, then re-run the same setup skill or the role `*-init` skill to finish workspace bootstrap.
 
 ---
 
-## Phase 5 — Continue role init
+## Step 5 — Finish setting up your workspace
 
 After plugins are present (and Cursor reloaded if needed), read and follow the role init skill from the **role plugin clone**, starting at workspace bootstrap (skip plugin install):
 
@@ -100,17 +108,17 @@ For role inits: execute from **Step 1 / Phase 1** onward — **do not repeat** p
 
 ---
 
-## Update existing install
+## Getting the latest version later
 
 Use when plugins are **already cloned** and you want the latest skills from GitHub.
 
-### When to update
+### When it is worth updating
 
 - After a platform release or skill fix is pushed to GitHub
 - When a skill fails with outdated paths or missing steps
 - After `appse-marketplace` manifest adds or changes a plugin entry
 
-### Option A — re-run setup skill (recommended)
+### The easy way — run your setup skill again
 
 Run your role setup skill in Agent chat. It pulls marketplace, core, and role plugin (Phases 1–3), then reloads skills after **Developer: Reload Window** if anything changed.
 
@@ -124,7 +132,7 @@ Run your role setup skill in Agent chat. It pulls marketplace, core, and role pl
 
 Workspace repos (`arise-specs`, `arise`, …) are **not** updated by setup — only plugin clones under `plugins/local`.
 
-### Option B — manual git pull
+### The manual way — pull each repo yourself
 
 Confirm each repo has a **clean working tree** (`git status`) before pulling. Never pull on dirty.
 
@@ -148,17 +156,17 @@ git -C "$root\appse-product" pull origin main
 
 Then **Developer: Reload Window** in Cursor.
 
-### Option C — role init Step 0
+### The other way — your role's setup skill also offers to update
 
 If plugins are installed, run **`/pm-init`**, **`/eng-init`**, etc. Step 0 pulls marketplace → resolves manifest → pulls core + role plugin when you confirm.
 
-### After update
+### After updating
 
 1. Restart Cursor (`Developer: Reload Window`)
 2. Confirm skills appear in the picker (`/fumadocs-formatting`, role skills)
 3. Re-run `{role}-init` only if workspace or handbook layout changed — not required for skill-only plugin updates
 
-### Guardrails
+### Things that will bite you
 
 - Never pull with uncommitted changes in a plugin clone
 - Pull **marketplace first** — manifest may point at new plugin repos

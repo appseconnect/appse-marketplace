@@ -18,15 +18,36 @@ Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marke
 ## Workflow
 
 1. Read `skills/references/ai-tool-plugin-install.md`.
-2. **Phase 0** — Ask AI tool: **Cursor** / **Claude Code** / **Claude with VS Code**.
+2. Ask which tool they are using. Never guess:
+
+   > "Which app are you working in? The install steps are different for each one.
+   >
+   > - **Cursor**
+   > - **Claude Code** (the command line)
+   > - **Claude with VS Code**"
+
 3. **Install plugins** for **`appse-engineering`**:
    - **Cursor** → `marketplace-plugin-install.md` Phases 1–4
    - **Claude Code** or **Claude with VS Code** → `/plugin` commands in `ai-tool-plugin-install.md`
-4. If Cursor fresh clone required reload → stop; re-run **`/setup-eng`** or **`/eng-init`** after reload.
-5. **Phase 5** → follow `eng-init` from **Step 1** onward (skip Step 0). Pass AI tool choice.
+4. On Cursor, a first-time install needs a restart before the new skills appear. Stop and say so:
 
-## Definition of Done
+   > "The engineering tools are downloaded, but Cursor has to restart before it can
+   > see them. Open the command palette and run **Developer: Reload Window**. When it
+   > comes back, run `/setup-eng` again and I will pick up where we left off."
 
-- [ ] AI tool confirmed via explicit question.
-- [ ] `appse-core` + `appse-engineering` installed per chosen AI tool.
-- [ ] `eng-init` workspace bootstrap completed (or reload pending).
+5. Then follow `eng-init` from **Step 1** onward. Skip its Step 0 — the plugins are
+   already installed. Pass the tool choice along.
+
+## What "done" looks like
+
+- [ ] You told me which app you are using — I never assume it.
+- [ ] The two engineering tool sets, `appse-core` and `appse-engineering`, are installed.
+- [ ] Your workspace is set up by `eng-init` — or you have been told clearly that a
+      restart is needed and what to run next.
+
+## Output Rules
+
+- Everything the user reads is plain English — `conventions/plain-english.md` (appse-core)
+- This is often someone's first contact with appse ai. Assume no prior knowledge
+- Say what each step is doing and roughly how long it takes
+- When something fails, say what to try next — never leave them at an error message
