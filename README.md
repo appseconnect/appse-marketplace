@@ -374,9 +374,14 @@ Branch namespace prefix: `**appseai`** (not the repo name `arise`).
 `feature` is a reserved second segment — a user slug is never `feature`. That is what
 makes any branch name parse unambiguously back into its tier.
 
+**How many tiers is your choice.** `feature-worktree` takes `tiers=2` (default —
+feature + user branch) or `tiers=1` (feature branch only, work on it directly). Use
+`1` for solo, short-lived, or documentation-only changes where a second tier is pure
+ceremony; `2` when more than one person will touch the feature.
+
 PR at `eng-pr` is always **exactly one tier up**, derived from the branch name, never
-read from a file: user → feature → parent feature. `feature → main` is manual and
-post-Gate-4, out of scope for `eng-pr`.
+read from a file: user → feature → parent feature → `main`. That last hop is the
+final merge — `eng-pr` raises it only after confirming Gate 4, and never merges it.
 AzDO Epic/Feature/Story titles: `[{feature-id}]` prefix — see `pm-stories-azdo`.
 Full rules: `appse-core/conventions/branches.md` · `appse-core/conventions/naming.md`.
 
