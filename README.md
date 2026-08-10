@@ -53,7 +53,7 @@ marketplace ships **`setup-{role}`** skills that ask your AI tool, install core 
 | ------------------- | -------------- | --------------------------------------------------- |
 | `appse-product`     | **11**         | Full PM workflow incl. post-ship handoff + insights |
 | `appse-engineering` | **11**         | Includes `eng-docker` (local dev loop)              |
-| `appse-devops`      | **5**          | `ops-docker` = post–Gate 4 compose; not daily dev   |
+| `appse-devops`      | **6**          | `ops-docker` = post–Gate 4 compose; not daily dev; `ops-cost-review` = monthly Azure FinOps |
 | `appse-quality`     | **7**          | Includes `qa-deploy`                                |
 | `appse-design`      | **1**          | `ds-init` only                                      |
 | `appse-appdev`      | **5**          | `app-init` + `app-create`/`app-action`/`app-trigger`/`app-tools` |
@@ -374,10 +374,15 @@ Branch namespace prefix: `**appseai`** (not the repo name `arise`).
 `feature` is a reserved second segment — a user slug is never `feature`. That is what
 makes any branch name parse unambiguously back into its tier.
 
-**How many tiers is your choice.** `feature-worktree` takes `tiers=2` (default —
-feature + user branch) or `tiers=1` (feature branch only, work on it directly). Use
-`1` for solo, short-lived, or documentation-only changes where a second tier is pure
-ceremony; `2` when more than one person will touch the feature.
+**How many tiers is your choice, and `feature-worktree` asks.** It checks origin first.
+Feature branch already there → it says who else is on the feature and asks whether you
+want your own branch off it. Not there → it creates the feature branch and offers to
+push it, so the rest of the team can pick it up. Two tiers (feature + user branch) is
+the usual answer; one tier — the feature branch alone, worked on directly — suits solo,
+short-lived, or documentation-only changes. Pass `tiers=1` or `tiers=2` to skip the
+question in a scripted run.
+
+Each push is its own separate yes, and nothing is ever pushed to `main`.
 
 PR at `eng-pr` is always **exactly one tier up**, derived from the branch name, never
 read from a file: user → feature → parent feature → `main`. That last hop is the
