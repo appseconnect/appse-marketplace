@@ -51,7 +51,7 @@ marketplace ships **`setup-{role}`** skills that ask your AI tool, install core 
 
 | Plugin              | Skills in repo | Notes                                               |
 | ------------------- | -------------- | --------------------------------------------------- |
-| `appse-product`     | **11**         | Full PM workflow incl. post-ship handoff + insights |
+| `appse-product`     | **13**         | Full PM workflow incl. post-ship handoff + insights; `pm-themes` = standalone request→problem reframing |
 | `appse-engineering` | **11**         | Includes `eng-docker` (local dev loop)              |
 | `appse-devops`      | **6**          | `ops-docker` = post–Gate 4 compose; not daily dev; `ops-cost-review` = monthly Azure FinOps |
 | `appse-quality`     | **7**          | Includes `qa-deploy`                                |
