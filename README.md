@@ -82,13 +82,13 @@ in the Feature doc, never as their own doc or branch.
    │ direction chosen
 /pm-prd                   define the product/solution (assigns P / SP IDs)
    │
-/pm-epic                  EPIC doc — lists functional / technical features (sets EPIC slug)
+/pm-epic                  EPIC doc — lists its features (sets EPIC slug)
    │
 /pm-feature               Feature doc, stories inline (sets feature slug)
    │
 /feature-worktree         branch: EPIC (T1) or {epic}/{feature} (T3)
    │
-/pm-stories-azdo          (optional) EPIC → Feature (stories inline) → Azure DevOps
+/pm-azdo          (optional) EPIC → Feature (stories inline) → Azure DevOps
 /pm-workitem-sync         (optional) [pm-to-eng] move backlog → Engineering
    └──────────────────────────────────────► HANDOFF to Engineering
 
@@ -396,7 +396,7 @@ Each push is its own separate yes, and nothing is ever pushed to `main`.
 PR at `eng-pr` is always **exactly one tier up**, derived from the branch name, never
 read from a file: user → feature → EPIC → `main`. That last hop is the
 final merge — `eng-pr` raises it only after confirming Gate 4, and never merges it.
-AzDO is optional; when used, Epic/Feature titles carry a `[{feature-id}]` prefix — see `pm-stories-azdo`.
+AzDO is optional; when used, Epic/Feature titles carry a `[{feature-id}]` prefix — see `pm-azdo`.
 Full rules: `appse-core/conventions/branches.md` · `appse-core/conventions/naming.md`.
 
 ## Adding a new plugin
