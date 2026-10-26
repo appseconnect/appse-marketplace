@@ -25,7 +25,7 @@ Both manifests list the same plugins and stay in sync.
 | Plugin              | Repo                                                                   | Description                                              |
 | ------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------- |
 | `appse-core`        | [appse-core](https://github.com/appseconnect/appse-core)               | Conventions, paths, gates, AzDO, **fumadocs-formatting** |
-| `appse-product`     | [appse-product](https://github.com/appseconnect/appse-product)         | PM skills — discovery, PRD, FRD, roadmap, stories        |
+| `appse-product`     | [appse-product](https://github.com/appseconnect/appse-product)         | PM skills — discovery, PRD, EPIC, Feature, roadmap, launch |
 | `appse-engineering` | [appse-engineering](https://github.com/appseconnect/appse-engineering) | Architecture + engineering skills                        |
 | `appse-quality`     | [appse-quality](https://github.com/appseconnect/appse-quality)         | QA skills — test, deploy, E2E, review                    |
 | `appse-devops`      | [appse-devops](https://github.com/appseconnect/appse-devops)           | DevOps skills — deploy spec, build/publish, K8s          |
@@ -51,7 +51,7 @@ marketplace ships **`setup-{role}`** skills that ask your AI tool, install core 
 
 | Plugin              | Skills in repo | Notes                                               |
 | ------------------- | -------------- | --------------------------------------------------- |
-| `appse-product`     | **13**         | Full PM workflow incl. post-ship handoff + insights; `pm-themes` = standalone request→problem reframing |
+| `appse-product`     | **13**         | Full PM workflow incl. post-ship handoff + insights; `pm-planning-hub` = tickets and requests → problems, initiatives, roadmap |
 | `appse-engineering` | **11**         | Includes `eng-docker` (local dev loop)              |
 | `appse-devops`      | **6**          | `ops-docker` = post–Gate 4 compose; not daily dev; `ops-cost-review` = monthly Azure FinOps |
 | `appse-quality`     | **7**          | Includes `qa-deploy`                                |
@@ -68,11 +68,13 @@ marketplace ships **`setup-{role}`** skills that ask your AI tool, install core 
 ### Product Manager
 
 Install `appse-product`, then run skills in order. Each step gates the next.
+Pipeline: **PRD → EPIC → Feature → branch → build → release** — stories live inline
+in the Feature doc, never as their own doc or branch.
 
 ```text
 /pm-init                  bootstrap env (use /setup-pm first on fresh Cursor install)
    │
-/pm-triage                Zoho Desk + AzDO → ranked problem list
+/pm-planning-hub          Zoho tickets or requests → problems, initiatives, roadmap
    │ pick a problem
 /pm-user-research         (with Designer) validate → JTBD + evidence
    │ problem validated
@@ -80,14 +82,20 @@ Install `appse-product`, then run skills in order. Each step gates the next.
    │ direction chosen
 /pm-prd                   define the product/solution (assigns P / SP IDs)
    │
-/pm-frd                   feature requirements + FRD (assigns F IDs)
+/pm-epic                  EPIC doc — lists functional / technical features (sets EPIC slug)
    │
-/pm-roadmap               sequence features
+/pm-feature               Feature doc, stories inline (sets feature slug)
    │
-/pm-stories-azdo          Epic→Feature→Story→Task + U/J IDs → Azure DevOps
+/pm-roadmap               sequence EPICs and features
    │
-/pm-workitem-sync         [pm-to-eng] move backlog → Engineering
+/feature-worktree         branch: EPIC (T1) or {epic}/{feature} (T3)
+   │
+/pm-stories-azdo          (optional) EPIC → Feature (stories inline) → Azure DevOps
+/pm-workitem-sync         (optional) [pm-to-eng] move backlog → Engineering
    └──────────────────────────────────────► HANDOFF to Engineering
+
+   pre-ship:
+   /pm-launch-plan         launch plan + release record (product/releases/{version}.md)
 
    post-ship (continuous):
    /pm-marketing-handoff   single doc for marketing (after ship)
@@ -128,7 +136,7 @@ Install `appse-engineering`. Receives features from PM handoff. Quality gates bl
 ```text
 /eng-init                 bootstrap dev env (.NET, Node, Docker, repos)
    │ receives feature on Eng backlog
-/arch-spec                ADRs from PRD/FRD + codebase
+/arch-spec                ADRs from PRD/EPIC/Feature + codebase
 /arch-system              component + sequence diagrams
 /arch-doc                 stack + patterns (as needed)
    │
@@ -207,7 +215,7 @@ OPS(prod) ◄──[Gate 4 ✅]── QA ◄──[qa-deploy]── OPS(ops-buil
 Feature → Image map     ops-build writes · qa-deploy reads · ops-k8s reads
                         (handbook/engineering/deployments/image-map.json — digest required)
 Env registry            eng-dev declares · ops-spec reconciles · all deploys read
-Requirement ID registry pm-prd (P/SP) · pm-frd (F) · pm-stories-azdo (U/J)
+Requirement ID registry pm-prd (P/SP) · pm-epic (EPIC slug) · pm-feature (functional) · arch/eng (technical)
                         ({BASE}/requirement-id-registry.json)
 Branch context          NOT a file — every skill derives feature id, user slug and
                         PR target from `git branch --show-current`
@@ -334,7 +342,7 @@ Handbook layout in `arise-specs`:
 
 | Scope                   | Path                                                   |
 | ----------------------- | ------------------------------------------------------ |
-| PM (prd, frd, registry) | `handbook/product/`                                    |
+| PM (prd, epics, releases, registry) | `handbook/product/`                        |
 | Engineering, QA, Ops    | `handbook/engineering/`                                |
 | Shared                  | `handbook/playbooks/`, `guidelines/`, `azdo-config.md` |
 
@@ -367,9 +375,12 @@ Branch namespace prefix: `**appseai`** (not the repo name `arise`).
 
 | Tier | Branch              | Pattern                             |
 | ---- | ------------------- | ----------------------------------- |
-| T1   | Feature integration | `appseai/feature/{feature-id}`      |
-| T3   | Sub-feature         | `appseai/feature/{parent}/{sub}`    |
+| T1   | EPIC integration    | `appseai/feature/{epic}`            |
+| T3   | Feature (under EPIC)| `appseai/feature/{epic}/{feature}`  |
 | T2   | Developer           | `appseai/{user}/{feature-id}`       |
+
+Branches are cut at EPIC or Feature level — never per story. `{feature-id}` is
+`{epic}` or `{epic}/{feature}`, matching the EPIC and Feature docs.
 
 `feature` is a reserved second segment — a user slug is never `feature`. That is what
 makes any branch name parse unambiguously back into its tier.
@@ -385,9 +396,9 @@ question in a scripted run.
 Each push is its own separate yes, and nothing is ever pushed to `main`.
 
 PR at `eng-pr` is always **exactly one tier up**, derived from the branch name, never
-read from a file: user → feature → parent feature → `main`. That last hop is the
+read from a file: user → feature → EPIC → `main`. That last hop is the
 final merge — `eng-pr` raises it only after confirming Gate 4, and never merges it.
-AzDO Epic/Feature/Story titles: `[{feature-id}]` prefix — see `pm-stories-azdo`.
+AzDO is optional; when used, Epic/Feature titles carry a `[{feature-id}]` prefix — see `pm-stories-azdo`.
 Full rules: `appse-core/conventions/branches.md` · `appse-core/conventions/naming.md`.
 
 ## Adding a new plugin

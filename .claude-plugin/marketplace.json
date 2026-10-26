@@ -24,7 +24,7 @@
     {
       "name": "appse-product",
       "source": { "source": "github", "repo": "appseconnect/appse-product" },
-      "description": "PM skills — discovery, PRD, FRD, roadmap, stories"
+      "description": "PM skills — Zoho ticket analysis, discovery, PRD → EPIC → Feature (stories inline), roadmap, launch + release"
     },
     {
       "name": "appse-engineering",
