@@ -25,7 +25,7 @@ Both manifests list the same plugins and stay in sync.
 | Plugin              | Repo                                                                   | Description                                              |
 | ------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------- |
 | `appse-core`        | [appse-core](https://github.com/appseconnect/appse-core)               | Conventions, paths, gates, AzDO, **fumadocs-formatting** |
-| `appse-product`     | [appse-product](https://github.com/appseconnect/appse-product)         | PM skills — discovery, PRD, EPIC, Feature, roadmap, launch |
+| `appse-product`     | [appse-product](https://github.com/appseconnect/appse-product)         | PM skills — planning hub + roadmap, discovery, PRD, EPIC, Feature, launch |
 | `appse-engineering` | [appse-engineering](https://github.com/appseconnect/appse-engineering) | Architecture + engineering skills                        |
 | `appse-quality`     | [appse-quality](https://github.com/appseconnect/appse-quality)         | QA skills — test, deploy, E2E, review                    |
 | `appse-devops`      | [appse-devops](https://github.com/appseconnect/appse-devops)           | DevOps skills — deploy spec, build/publish, K8s          |
@@ -51,7 +51,7 @@ marketplace ships **`setup-{role}`** skills that ask your AI tool, install core 
 
 | Plugin              | Skills in repo | Notes                                               |
 | ------------------- | -------------- | --------------------------------------------------- |
-| `appse-product`     | **13**         | Full PM workflow incl. post-ship handoff + insights; `pm-planning-hub` = tickets and requests → problems, initiatives, roadmap |
+| `appse-product`     | **12**         | Full PM workflow incl. post-ship handoff + insights; `pm-planning-hub` = tickets and requests → problems, initiatives, roadmap |
 | `appse-engineering` | **11**         | Includes `eng-docker` (local dev loop)              |
 | `appse-devops`      | **6**          | `ops-docker` = post–Gate 4 compose; not daily dev; `ops-cost-review` = monthly Azure FinOps |
 | `appse-quality`     | **7**          | Includes `qa-deploy`                                |
@@ -74,8 +74,8 @@ in the Feature doc, never as their own doc or branch.
 ```text
 /pm-init                  bootstrap env (use /setup-pm first on fresh Cursor install)
    │
-/pm-planning-hub          Zoho tickets or requests → problems, initiatives, roadmap
-   │ pick a problem
+/pm-planning-hub          Zoho tickets or requests → problems, initiatives, roadmap (Now / Next / Later)
+   │ pick a Now problem
 /pm-user-research         (with Designer) validate → JTBD + evidence
    │ problem validated
 /pm-brainstorm            explore options → recommend one direction
@@ -85,8 +85,6 @@ in the Feature doc, never as their own doc or branch.
 /pm-epic                  EPIC doc — lists functional / technical features (sets EPIC slug)
    │
 /pm-feature               Feature doc, stories inline (sets feature slug)
-   │
-/pm-roadmap               sequence EPICs and features
    │
 /feature-worktree         branch: EPIC (T1) or {epic}/{feature} (T3)
    │
