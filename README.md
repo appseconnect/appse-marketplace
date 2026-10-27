@@ -213,8 +213,8 @@ OPS(prod) ◄──[Gate 4 ✅]── QA ◄──[qa-deploy]── OPS(ops-buil
 Feature → Image map     ops-build writes · qa-deploy reads · ops-k8s reads
                         (handbook/engineering/deployments/image-map.json — digest required)
 Env registry            eng-dev declares · ops-spec reconciles · all deploys read
-Requirement ID registry pm-prd (P/SP) · pm-epic (EPIC slug) · pm-feature (functional) · arch/eng (technical)
-                        ({BASE}/requirement-id-registry.json)
+Requirement ids          NOT a file — P/SP in the PRD, slugs = folder/file names,
+                        status in each doc, Azure DevOps ids on the board
 Branch context          NOT a file — every skill derives feature id, user slug and
                         PR target from `git branch --show-current`
                         (appse-core/conventions/branches.md → resolve-branch-context)
@@ -340,7 +340,7 @@ Handbook layout in `arise-specs`:
 
 | Scope                   | Path                                                   |
 | ----------------------- | ------------------------------------------------------ |
-| PM (prd, epics, releases, registry) | `handbook/product/`                        |
+| PM (prd, epics, releases)           | `handbook/product/`                        |
 | Engineering, QA, Ops    | `handbook/engineering/`                                |
 | Shared                  | `handbook/playbooks/`, `guidelines/`, `azdo-config.md` |
 
