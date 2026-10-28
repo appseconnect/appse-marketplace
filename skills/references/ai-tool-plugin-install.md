@@ -1,6 +1,6 @@
 # AI Tool Plugin Install
 
-Shared by `setup-{role}` skills and role `*-init` Step 0. **No symlinks** on Cursor — git clone or pull only.
+Shared by the `{role}-setup` skills (Step 0). **No symlinks** on Cursor — git clone or pull only.
 
 ## Phase 0 — Select AI tool
 
@@ -20,13 +20,16 @@ Record the choice for the setup report. Branch to the matching install path belo
 
 Every role needs **`appse-core`** plus one role plugin:
 
-| Setup skill | Role plugin | Role init (after plugins) |
-|-------------|-------------|---------------------------|
-| `setup-pm` | `appse-product` | `pm-init` |
-| `setup-ds` | `appse-design` | `ds-init` |
-| `setup-eng` | `appse-engineering` | `eng-init` |
-| `setup-qa` | `appse-quality` | `qa-init` |
-| `setup-ops` | `appse-devops` | `ops-init` |
+| Setup skill | Role plugin |
+|-------------|-------------|
+| `pm-setup` | `appse-product` |
+| `design-setup` | `appse-product` *(appse-design reserved)* |
+| `eng-setup` | `appse-engineering` |
+| `arch-setup` | `appse-architecture` |
+| `qa-setup` | `appse-quality` |
+| `ops-setup` | `appse-devops` |
+
+A senior developer who also reviews architecture runs both `eng-setup` and `arch-setup`.
 
 Replace `{role-plugin}` below with the role plugin name from the table.
 
@@ -50,7 +53,7 @@ Run in the **Cursor integrated terminal**. Full procedure: `marketplace-plugin-i
 1. Clone or pull **`appse-marketplace`** → read `.cursor-plugin/marketplace.json`.
 2. Clone or pull **`appse-core`** + **`{role-plugin}`** from manifest entries.
 3. Verify each clone: `.cursor-plugin/plugin.json`; core has `AGENTS.md`, `mcp.json`, `conventions/`.
-4. **Fresh clone** → tell engineer to run **Developer: Reload Window**, then re-run setup or `*-init`.
+4. **Fresh clone** → tell engineer to run **Developer: Reload Window**, then re-run `{role}-setup`.
 
 ### Preflight (Cursor)
 
@@ -162,24 +165,7 @@ Restart VS Code if skills do not refresh after plugin install.
 
 ## Phase 5 — Continue role init
 
-After plugins are installed (and Cursor reloaded if needed), read and follow the role init skill — **skip plugin install**:
-
-| Role plugin | Init skill path (Cursor clone) |
-|-------------|--------------------------------|
-| `appse-product` | `%USERPROFILE%\.cursor\plugins\local\appse-product\skills\pm-init\SKILL.md` |
-| `appse-design` | `%USERPROFILE%\.cursor\plugins\local\appse-design\skills\ds-init\SKILL.md` |
-| `appse-engineering` | `%USERPROFILE%\.cursor\plugins\local\appse-engineering\skills\eng-init\SKILL.md` |
-| `appse-quality` | `%USERPROFILE%\.cursor\plugins\local\appse-quality\skills\qa-init\SKILL.md` |
-| `appse-devops` | `%USERPROFILE%\.cursor\plugins\local\appse-devops\skills\ops-init\SKILL.md` |
-
-For Claude Code / Claude with VS Code, read the same init skill from the installed plugin (plugin manager resolves paths).
-
-| Role init | Start at |
-|-----------|----------|
-| `pm-init`, `ds-init`, `eng-init`, `ops-init` | **Step 1** (skip Step 0) |
-| `qa-init` | **Phase 1** (skip Phase 2 plugin install) |
-
-Pass the **AI tool choice** to init so workspace-open steps use the correct branch.
+After plugins are installed (and Cursor reloaded if needed), go back to your setup skill (`{role}-setup`) — it continues with the workspace steps in its `references/workspace.md`. Do not repeat the plugin install.
 
 ---
 
@@ -187,7 +173,7 @@ Pass the **AI tool choice** to init so workspace-open steps use the correct bran
 
 ### Cursor
 
-Re-run **`/setup-{role}`** or pull marketplace → core → role plugin. See **Update existing install** in `marketplace-plugin-install.md`.
+Re-run **`/{role}-setup`** or pull marketplace → core → role plugin. See **Update existing install** in `marketplace-plugin-install.md`.
 
 ### Claude Code / Claude with VS Code
 

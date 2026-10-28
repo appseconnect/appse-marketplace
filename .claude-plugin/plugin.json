@@ -1,8 +1,8 @@
 {
   "name": "appse-marketplace",
   "displayName": "appse ai Marketplace",
-  "version": "1.1.0",
-  "description": "Plugin catalog and role setup skills for appse ai. Install from the appse marketplace, then run setup-{role} to bootstrap core + role plugins.",
+  "version": "2.0.0",
+  "description": "Plugin catalog and role setup skills for appse ai. Install from the appse marketplace, then run {role}-setup to install and set up everything for your role.",
   "author": {
     "name": "appse ai",
     "email": "eng@appse.ai"

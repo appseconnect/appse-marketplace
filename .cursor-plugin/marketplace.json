@@ -8,12 +8,12 @@
       "source": "./",
       "description": "Role setup skills — bootstrap appse-core + role plugin from catalog",
       "skills": [
-        "./skills/setup-pm",
-        "./skills/setup-ds",
-        "./skills/setup-eng",
-        "./skills/setup-qa",
-        "./skills/setup-ops",
-        "./skills/setup-appdev"
+        "./skills/pm-setup",
+        "./skills/design-setup",
+        "./skills/eng-setup",
+        "./skills/qa-setup",
+        "./skills/ops-setup",
+        "./skills/app-setup"
       ]
     },
     {

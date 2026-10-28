@@ -8,12 +8,13 @@
       "source": "./",
       "description": "Role setup skills — bootstrap appse-core + role plugin from catalog",
       "skills": [
-        "./skills/setup-pm",
-        "./skills/setup-ds",
-        "./skills/setup-eng",
-        "./skills/setup-qa",
-        "./skills/setup-ops",
-        "./skills/setup-appdev"
+        "./skills/pm-setup",
+        "./skills/design-setup",
+        "./skills/eng-setup",
+        "./skills/arch-setup",
+        "./skills/qa-setup",
+        "./skills/ops-setup",
+        "./skills/app-setup"
       ]
     },
     {
@@ -32,7 +33,12 @@
         "source": "github",
         "repo": "appseconnect/appse-engineering"
       },
-      "description": "Architecture + engineering skills"
+      "description": "Engineering skills — technical spec, build, run locally, code review, PRs, bug fixes"
+    },
+    {
+      "name": "appse-architecture",
+      "source": { "source": "github", "repo": "appseconnect/appse-architecture" },
+      "description": "Architecture skills — platform baseline, decision records, Gate 1 review. Architects and senior developers"
     },
     {
       "name": "appse-quality",
@@ -47,7 +53,7 @@
     {
       "name": "appse-design",
       "source": { "source": "github", "repo": "appseconnect/appse-design" },
-      "description": "Product Design — reserved"
+      "description": "Product Design — reserved; designers use appse-product via design-setup until design skills ship"
     },
     {
       "name": "appse-appdev",

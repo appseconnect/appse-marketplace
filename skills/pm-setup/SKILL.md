@@ -1,17 +1,17 @@
 ---
-name: setup-pm
+name: pm-setup
 description: >
-  Bootstrap Product Manager environment for appse ai. Asks which AI tool
-  (Cursor, Claude Code, or Claude with VS Code), installs appse-core and
-  appse-product per tool, then runs pm-init workspace setup. Use on a fresh
-  machine before any pm- skill. Trigger on "setup product", "setup-pm",
-  "install pm plugins", "bootstrap product manager", or when pm-init is not
-  yet available.
+  One-step setup for the Product Manager on appse ai. Installs appse-core and appse-product for your AI tool
+  (Cursor, Claude Code, or Claude with VS Code), then sets up the workspace — clones
+  arise-specs, creates pm-workspace.code-workspace and checks your tools (Zoho Desk MCP, optional Azure DevOps MCP).
+  Run once per machine; run again any time to re-check a broken setup — it skips what is
+  already done. Trigger on "setup product", "init product", "set up the handbook", "pm-setup", "install pm plugins", or
+  "get my environment ready".
 ---
 
-# setup-pm — Product Manager Bootstrap
+# pm-setup — Product Manager Setup
 
-Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marketplace). Run **before** `/pm-init` on a fresh install.
+Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marketplace).
 
 ## Required plugins
 
@@ -19,6 +19,7 @@ Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marke
 
 ## Workflow
 
+0. **Already installed?** If `appse-product` skills are available, skip to step 5 — this run re-checks the workspace.
 1. Read `skills/references/ai-tool-plugin-install.md`.
 2. Ask which tool they are using. Never guess:
 
@@ -35,16 +36,15 @@ Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marke
 
    > "The Product Manager tools are downloaded, but Cursor has to restart before it
    > can see them. Open the command palette and run **Developer: Reload Window**.
-   > When it comes back, run `/setup-pm` again and I will pick up where we left off."
+   > When it comes back, run `/pm-setup` again and I will pick up where we left off."
 
-5. Then follow `pm-init` from **Step 1** onward. Skip its Step 0 — the plugins are
-   already installed. Pass the tool choice along so it opens the workspace correctly.
+5. Set up the workspace — follow `references/workspace.md` from its first step. Pass the tool choice along.
 
 ## What "done" looks like
 
 - [ ] You told me which app you are using — I never assume it.
 - [ ] The two Product Manager tool sets, `appse-core` and `appse-product`, are installed.
-- [ ] Your workspace is set up by `pm-init` — or you have been told clearly that a
+- [ ] Your workspace is set up (`references/workspace.md`) — or you have been told clearly that a
       restart is needed and what to run next.
 
 ## Output Rules
