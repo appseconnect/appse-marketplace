@@ -105,7 +105,7 @@ handbook/product/
 ```
 
 `.appse/skills-config.yaml` starts from
-`pm-intake/references/skills-config.template.yaml` — it holds no secrets.
+`pm-plan/references/skills-config.template.yaml` — it holds no secrets.
 
 `epics/index.md` and `releases/index.md` start as a title, a one-line description
 and an empty table header — `| EPIC | Slug | What it delivers | Status |` and
@@ -136,7 +136,7 @@ Save setup report to `setup/pm-env-{YYYY-MM-DD}.md` and print summary:
 > I saved a note of all this at `{report-path}`, in case you need it later.
 >
 > **Where to start.** If you are not sure what to build yet, go through what
-> customers have been telling us, or plan a request someone brought you → `/pm-intake`. If you already know the problem,
+> customers have been telling us → `/ticket-analyser`, then plan the accepted tickets → `/pm-plan`. If you already know the problem,
 > write the product plan → `/pm-prd`."
 
 ---
