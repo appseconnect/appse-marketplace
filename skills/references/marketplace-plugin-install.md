@@ -5,7 +5,7 @@ This is the Cursor route. If you are using Claude Code or Claude with VS Code, r
 
 **Cursor branch only.** For IDE selection and Claude Code / Claude with VS Code paths, read `ai-tool-plugin-install.md` first.
 
-Shared by `setup-{role}` skills and role `*-init` Step 0 when **AI tool = Cursor**. **No symlinks** — git clone or pull only.
+Shared by the `{role}-setup` skills (Step 0) when **AI tool = Cursor**. **No symlinks** — git clone or pull only.
 
 ## Constants
 
@@ -20,13 +20,16 @@ Shared by `setup-{role}` skills and role `*-init` Step 0 when **AI tool = Cursor
 
 Every role needs **`appse-core`** plus one role plugin:
 
-| Setup skill | Role plugin | Role init (after plugins) |
-|-------------|-------------|---------------------------|
-| `setup-pm` | `appse-product` | `pm-init` |
-| `setup-ds` | `appse-design` | `ds-init` |
-| `setup-eng` | `appse-engineering` | `eng-init` |
-| `setup-qa` | `appse-quality` | `qa-init` |
-| `setup-ops` | `appse-devops` | `ops-init` |
+| Setup skill | Role plugin |
+|-------------|-------------|
+| `pm-setup` | `appse-product` |
+| `design-setup` | `appse-product` *(appse-design reserved)* |
+| `eng-setup` | `appse-engineering` |
+| `arch-setup` | `appse-architecture` |
+| `qa-setup` | `appse-quality` |
+| `ops-setup` | `appse-devops` |
+
+A senior developer who also reviews architecture runs both `eng-setup` and `arch-setup`.
 
 ---
 
@@ -78,7 +81,7 @@ Apply to **each** resolved plugin (`appse-core` + role plugin):
 **Verify each clone:**
 
 - `.cursor-plugin/plugin.json` present
-- Role plugin: `skills/{role}-init/SKILL.md` exists
+- Role plugin: `skills/{role}-setup/SKILL.md` exists
 - Core: `AGENTS.md`, `mcp.json`, `conventions/` present
 
 ---
@@ -88,23 +91,13 @@ Apply to **each** resolved plugin (`appse-core` + role plugin):
 Cursor only notices new skills when it restarts. Skipping this is the single most
 common reason someone thinks the install failed.
 
-If **any** plugin was freshly cloned in this run → tell the user to run **Developer: Reload Window**, then re-run the same setup skill or the role `*-init` skill to finish workspace bootstrap.
+If **any** plugin was freshly cloned in this run → tell the user to run **Developer: Reload Window**, then re-run the same setup skill or the role `{role}-setup` skill to finish workspace bootstrap.
 
 ---
 
 ## Step 5 — Finish setting up your workspace
 
-After plugins are present (and Cursor reloaded if needed), read and follow the role init skill from the **role plugin clone**, starting at workspace bootstrap (skip plugin install):
-
-| Role plugin | Init skill path |
-|-------------|-----------------|
-| `appse-product` | `%USERPROFILE%\.cursor\plugins\local\appse-product\skills\pm-init\SKILL.md` |
-| `appse-design` | `%USERPROFILE%\.cursor\plugins\local\appse-design\skills\ds-init\SKILL.md` |
-| `appse-engineering` | `%USERPROFILE%\.cursor\plugins\local\appse-engineering\skills\eng-init\SKILL.md` |
-| `appse-quality` | `%USERPROFILE%\.cursor\plugins\local\appse-quality\skills\qa-init\SKILL.md` |
-| `appse-devops` | `%USERPROFILE%\.cursor\plugins\local\appse-devops\skills\ops-init\SKILL.md` |
-
-For role inits: execute from **Step 1 / Phase 1** onward — **do not repeat** plugin install (Step 0 / Phase 2 plugin branch).
+After plugins are present (and Cursor reloaded if needed), go back to your setup skill (`{role}-setup`) — it continues with the workspace steps in its `references/workspace.md`. Do not repeat the plugin install.
 
 ---
 
@@ -124,11 +117,11 @@ Run your role setup skill in Agent chat. It pulls marketplace, core, and role pl
 
 | Role | Command |
 |------|---------|
-| Product Manager | `/setup-pm` |
-| Product Designer | `/setup-ds` |
-| Product Engineer | `/setup-eng` |
-| Quality Engineer | `/setup-qa` |
-| DevOps Engineer | `/setup-ops` |
+| Product Manager | `/pm-setup` |
+| Product Designer | `/design-setup` |
+| Product Engineer | `/eng-setup` |
+| Quality Engineer | `/qa-setup` |
+| DevOps Engineer | `/ops-setup` |
 
 Workspace repos (`arise-specs`, `arise`, …) are **not** updated by setup — only plugin clones under `plugins/local`.
 
@@ -149,8 +142,9 @@ git -C "$root\appse-product" pull origin main
 | Role | Third repo to pull |
 |------|-------------------|
 | Product Manager | `appse-product` |
-| Product Designer | `appse-design` |
+| Product Designer | `appse-product` |
 | Product Engineer | `appse-engineering` |
+| Architect | `appse-architecture` |
 | Quality Engineer | `appse-quality` |
 | DevOps Engineer | `appse-devops` |
 
@@ -158,17 +152,17 @@ Then **Developer: Reload Window** in Cursor.
 
 ### The other way — your role's setup skill also offers to update
 
-If plugins are installed, run **`/pm-init`**, **`/eng-init`**, etc. Step 0 pulls marketplace → resolves manifest → pulls core + role plugin when you confirm.
+If plugins are installed, run **`/pm-setup`**, **`/eng-setup`**, etc. Step 0 pulls marketplace → resolves manifest → pulls core + role plugin when you confirm.
 
 ### After updating
 
 1. Restart Cursor (`Developer: Reload Window`)
 2. Confirm skills appear in the picker (`/fumadocs-formatting`, role skills)
-3. Re-run `{role}-init` only if workspace or handbook layout changed — not required for skill-only plugin updates
+3. Re-run `{role}-setup` only if workspace or handbook layout changed — not required for skill-only plugin updates
 
 ### Things that will bite you
 
 - Never pull with uncommitted changes in a plugin clone
 - Pull **marketplace first** — manifest may point at new plugin repos
-- If a new plugin appears in the manifest but folder is missing, re-run **`/setup-{role}`** to clone it
+- If a new plugin appears in the manifest but folder is missing, re-run **`/{role}-setup`** to clone it
 

@@ -1,13 +1,15 @@
 ---
-name: setup-qa
+name: qa-setup
 description: >
-  Bootstrap Quality Engineer environment for appse ai. Asks which AI tool
-  (Cursor, Claude Code, or Claude with VS Code), installs appse-core and
-  appse-quality per tool, then runs qa-init workspace setup. Trigger on
-  "setup qa", "setup-qa", "install qa plugins", or "bootstrap quality engineer".
+  One-step setup for the Quality Engineer on appse ai. Installs appse-core and appse-quality for your AI tool
+  (Cursor, Claude Code, or Claude with VS Code), then sets up the workspace — clones
+  arise-specs and arise-e2e, creates qa-workspace.code-workspace and checks your tools (Docker, Playwright, Azure DevOps).
+  Run once per machine; run again any time to re-check a broken setup — it skips what is
+  already done. Trigger on "setup qa", "init qa", "set up testing environment", "check my qa setup", "qa-setup", "install qa plugins", or
+  "get my environment ready".
 ---
 
-# setup-qa — Quality Engineer Bootstrap
+# qa-setup — Quality Engineer Setup
 
 Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marketplace).
 
@@ -17,6 +19,7 @@ Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marke
 
 ## Workflow
 
+0. **Already installed?** If `appse-quality` skills are available, skip to step 5 — this run re-checks the workspace.
 1. Read `skills/references/ai-tool-plugin-install.md`.
 2. Ask which tool they are using. Never guess:
 
@@ -33,16 +36,15 @@ Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marke
 
    > "The testing tools are downloaded, but Cursor has to restart before it can see
    > them. Open the command palette and run **Developer: Reload Window**. When it
-   > comes back, run `/setup-qa` again and I will pick up where we left off."
+   > comes back, run `/qa-setup` again and I will pick up where we left off."
 
-5. Then follow `qa-init` from **Phase 1** onward. Skip its plugin install — that is
-   already done. Pass the tool choice along.
+5. Set up the workspace — follow `references/workspace.md` from its first step. Pass the tool choice along.
 
 ## What "done" looks like
 
 - [ ] You told me which app you are using — I never assume it.
 - [ ] The two testing tool sets, `appse-core` and `appse-quality`, are installed.
-- [ ] Your environment is set up by `qa-init` — or you have been told clearly that a
+- [ ] Your environment is set up by `qa-setup` — or you have been told clearly that a
       restart is needed and what to run next.
 
 ## Output Rules

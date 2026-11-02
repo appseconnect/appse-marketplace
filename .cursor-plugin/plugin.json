@@ -2,7 +2,7 @@
   "name": "appse-marketplace",
   "displayName": "appse ai Marketplace",
   "version": "1.1.0",
-  "description": "Plugin catalog and role setup skills for appse ai. Clone this repo first into Cursor plugins/local, then run setup-{role}.",
+  "description": "Plugin catalog and role setup skills for appse ai. Clone this repo first into Cursor plugins/local, then run {role}-setup.",
   "author": {
     "name": "appse ai",
     "email": "eng@appse.ai"

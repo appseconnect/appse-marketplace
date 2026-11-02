@@ -1,13 +1,15 @@
 ---
-name: setup-eng
+name: eng-setup
 description: >
-  Bootstrap Product Engineer environment for appse ai. Asks which AI tool
-  (Cursor, Claude Code, or Claude with VS Code), installs appse-core and
-  appse-engineering per tool, then runs eng-init workspace setup. Trigger on
-  "setup engineering", "setup-eng", "install eng plugins", or "bootstrap developer".
+  One-step setup for the Product Engineer on appse ai. Installs appse-core and appse-engineering for your AI tool
+  (Cursor, Claude Code, or Claude with VS Code), then sets up the workspace — clones
+  arise and arise-specs, creates eng-workspace.code-workspace and checks your tools (.NET 8, Node/pnpm, Docker, Azure DevOps MCP).
+  Run once per machine; run again any time to re-check a broken setup — it skips what is
+  already done. Trigger on "setup engineering", "init engineering", "set up dev environment", "check my dev setup", "eng-setup", "install eng plugins", or
+  "get my environment ready".
 ---
 
-# setup-eng — Product Engineer Bootstrap
+# eng-setup — Product Engineer Setup
 
 Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marketplace).
 
@@ -17,6 +19,7 @@ Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marke
 
 ## Workflow
 
+0. **Already installed?** If `appse-engineering` skills are available, skip to step 5 — this run re-checks the workspace.
 1. Read `skills/references/ai-tool-plugin-install.md`.
 2. Ask which tool they are using. Never guess:
 
@@ -33,16 +36,15 @@ Entry skill from [appse-marketplace](https://github.com/appseconnect/appse-marke
 
    > "The engineering tools are downloaded, but Cursor has to restart before it can
    > see them. Open the command palette and run **Developer: Reload Window**. When it
-   > comes back, run `/setup-eng` again and I will pick up where we left off."
+   > comes back, run `/eng-setup` again and I will pick up where we left off."
 
-5. Then follow `eng-init` from **Step 1** onward. Skip its Step 0 — the plugins are
-   already installed. Pass the tool choice along.
+5. Set up the workspace — follow `references/workspace.md` from its first step. Pass the tool choice along.
 
 ## What "done" looks like
 
 - [ ] You told me which app you are using — I never assume it.
 - [ ] The two engineering tool sets, `appse-core` and `appse-engineering`, are installed.
-- [ ] Your workspace is set up by `eng-init` — or you have been told clearly that a
+- [ ] Your workspace is set up (`references/workspace.md`) — or you have been told clearly that a
       restart is needed and what to run next.
 
 ## Output Rules
