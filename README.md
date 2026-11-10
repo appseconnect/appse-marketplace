@@ -53,7 +53,7 @@ marketplace ships one **`{role}-setup`** skill per role: it asks your AI tool, i
 
 | Plugin              | Skills in repo | Notes                                               |
 | ------------------- | -------------- | --------------------------------------------------- |
-| `appse-product`     | **10**         | Full PM workflow incl. post-ship handoff + insights; `pm-plan` = accepted tickets → problems, initiatives, roadmap |
+| `appse-product`     | **11**         | Full PM workflow incl. competitor landscape, post-ship handoff + insights; `pm-plan` = accepted tickets → problems, initiatives, roadmap |
 | `appse-engineering` | **8**          | Includes `eng-run` (local dev loop)              |
 | `appse-architecture` | **3**         | `arch-design`, `arch-decision`, `arch-review` |
 | `appse-devops`      | **4**          | `ops-deploy` = post–Gate 4 Kubernetes or Compose files; not daily dev; `ops-cost-review` = monthly Azure FinOps |
@@ -82,6 +82,7 @@ in the Feature doc, never as their own doc or branch.
 /pm-research         (with Designer) validate → JTBD + evidence
    │ problem validated
 /pm-brainstorm            explore options → recommend one direction
+   │                        (any time: /pm-competitor — landscape, profiles, battle questions)
    │ direction chosen
 /pm-prd                   define the product/solution (assigns P / SP IDs)
    │
