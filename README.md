@@ -102,6 +102,7 @@ in the Feature doc, never as their own doc or branch.
    post-ship (continuous):
    /pm-marketing-handoff   single doc for marketing (after ship)
    /pm-usage       Clarity friction/drop-off analysis
+   /pm-value       value proposition — per persona: jobs, pain reliefs, gains (Live + Coming)
 ```
 
 ### Product Designer
